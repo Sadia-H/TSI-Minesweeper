@@ -6,7 +6,7 @@ public class Board {
 
     private int boardSize;
     private int numMines;
-    private Tile[][] playerBoard;
+    Tile[][] playerBoard;
 
     public Board(int boardSize, int numMines) {
         this.boardSize = boardSize;
@@ -123,19 +123,33 @@ public class Board {
 
 
     public void displayBoard() {
+
+        System.out.print("   ");
+        for (int col = 1; col <= boardSize; col++) {
+            System.out.printf("%2d ", col);
+        }
+        System.out.println();
+
+        System.out.print("  ");
+        for (int col = 0; col < boardSize; col++) {
+            System.out.print("---");
+        }
+        System.out.println();
+
         for (int i = 0; i < boardSize; i++) {
+            System.out.printf("%2d|", (i + 1));
             for (int j = 0; j < boardSize; j++) {
-                if (playerBoard[i][j].isRevealed()) {
+                if (playerBoard[i][j].isFlag()) {
+                    System.out.print(" F ");
+                } else if (playerBoard[i][j].isRevealed()) {
                     if (playerBoard[i][j].isMine()) {
-                        System.out.print("* ");
+                        System.out.print("*  ");
                     } else {
-                        System.out.print(playerBoard[i][j].getAdjacentMines() + " ");
+                        System.out.printf("%-3d", playerBoard[i][j].getAdjacentMines());
                     }
                 } else {
-                    System.out.print("- ");
+                    System.out.print("-  ");
                 }
-
-
             }
             System.out.println();
         }
@@ -153,7 +167,19 @@ public class Board {
         }
     }
 
+    public void placeFlag(int row, int col) {
+        playerBoard[row][col].setFlag(true);
+    }
 
+    public void removeFlag(int row, int col) {
+        playerBoard[row][col].setFlag(false);
+    }
+
+    public boolean switchFlag (int row, int col) {
+        boolean currentFlag = playerBoard[row][col].isFlag();
+        playerBoard[row][col].setFlag(!currentFlag);
+        return !currentFlag;
+    }
 }
 
 

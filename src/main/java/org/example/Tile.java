@@ -4,11 +4,13 @@ public class Tile {
     private boolean isMine;
     private int adjacentMines;
     private boolean isRevealed;
+    private boolean flag;
 
     public Tile () {
         this.isMine = false;
         this.adjacentMines = 0;
         this.isRevealed = false;
+        this.flag = false;
     }
 
     public boolean isMine() {
@@ -33,6 +35,14 @@ public class Tile {
 
     public void reveal() {
         this.isRevealed = true;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
 }

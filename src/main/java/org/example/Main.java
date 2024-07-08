@@ -20,41 +20,29 @@ public class Main {
             int userSelectedCol = getValidNumber(scan, "Please enter a column number: ", boardSize);
             int userSelectedRow = getValidNumber(scan, "Please enter a row number: ", boardSize);
 
-            if (!board.revealBoard(userSelectedRow, userSelectedCol)) {
-                board.displayBoard();
-                board.revealAllTiles();
-                System.out.println("It's a mine! Game over...");
-                System.out.println("Full board reveal:");
-                board.displayBoard();
-                gameOver = true;
+            if (board.playerBoard[userSelectedRow - 1][userSelectedCol - 1].isRevealed()) {
+                System.out.println("This tile has already been revealed. Please select another tile.");
             } else {
-                board.displayBoard();
-                if (board.checkWin()) {
+                if (!board.revealBoard(userSelectedRow, userSelectedCol)) {
+                    board.displayBoard();
                     board.revealAllTiles();
-                    System.out.println("Congratulations! You've won!");
+                    System.out.println("Game over! You hit a mine!");
+                    System.out.println("Full board reveal:");
                     board.displayBoard();
                     gameOver = true;
+                } else {
+                    board.displayBoard();
+                    if (board.checkWin()) {
+                        board.revealAllTiles();
+                        System.out.println("You win!");
+                        board.displayBoard();
+                        gameOver = true;
+                    }
                 }
             }
         }
 
         scan.close();
-
-//        while (!gameOver) {
-//            int userSelectedCol = getValidNumber(scan,"Please enter an column number: ", boardSize);
-//            int userSelectedRow = getValidNumber(scan,"Please enter an row number: ", boardSize);
-//
-//            board.revealBoard(userSelectedRow, userSelectedCol);
-//            //gameOver = board.playerLoses(userSelectedRow-1, userSelectedCol-1);
-//            gameOver = !board.revealBoard(userSelectedRow, userSelectedCol);
-//        }
-//
-//        board.revealAllTiles();
-//        board.displayBoard();
-//
-//        scan.close();
-
-
     }
 
     public static int getValidNumber (Scanner scan, String prompt, int boardSize) {
