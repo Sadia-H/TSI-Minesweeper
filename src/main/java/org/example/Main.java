@@ -12,11 +12,48 @@ public class Main {
         Board board = new Board(boardSize, numMines);
 
         Scanner scan = new Scanner(System.in);
-        int userSelectedCol = getValidNumber(scan,"Please enter an column number: ", boardSize);
-        int userSelectedRow = getValidNumber(scan,"Please enter an row number: ", boardSize);
+        boolean gameOver = false;
 
-       // System.out.println(userSelectedCol + " " + userSelectedRow);
-        board.revealBoard(userSelectedRow, userSelectedCol);
+        board.displayBoard();
+
+        while (!gameOver) {
+            int userSelectedCol = getValidNumber(scan, "Please enter a column number: ", boardSize);
+            int userSelectedRow = getValidNumber(scan, "Please enter a row number: ", boardSize);
+
+            if (!board.revealBoard(userSelectedRow, userSelectedCol)) {
+                board.displayBoard();
+                board.revealAllTiles();
+                System.out.println("It's a mine! Game over...");
+                System.out.println("Full board reveal:");
+                board.displayBoard();
+                gameOver = true;
+            } else {
+                board.displayBoard();
+                if (board.checkWin()) {
+                    board.revealAllTiles();
+                    System.out.println("Congratulations! You've won!");
+                    board.displayBoard();
+                    gameOver = true;
+                }
+            }
+        }
+
+        scan.close();
+
+//        while (!gameOver) {
+//            int userSelectedCol = getValidNumber(scan,"Please enter an column number: ", boardSize);
+//            int userSelectedRow = getValidNumber(scan,"Please enter an row number: ", boardSize);
+//
+//            board.revealBoard(userSelectedRow, userSelectedCol);
+//            //gameOver = board.playerLoses(userSelectedRow-1, userSelectedCol-1);
+//            gameOver = !board.revealBoard(userSelectedRow, userSelectedCol);
+//        }
+//
+//        board.revealAllTiles();
+//        board.displayBoard();
+//
+//        scan.close();
+
 
     }
 
