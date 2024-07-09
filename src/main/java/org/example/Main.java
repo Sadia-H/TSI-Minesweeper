@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Welcome to Minesweeper!");
+        System.out.println();
 
         int boardSize = 10;
         int numMines = 10;
@@ -17,12 +18,13 @@ public class Main {
         board.displayBoard();
 
         while (!gameOver) {
-            int userSelectedCol = getValidNumber(scan, "Please enter a column number: ", boardSize);
-            int userSelectedRow = getValidNumber(scan, "Please enter a row number: ", boardSize);
+            int userSelectedCol = getValidNumber(scan, "Please enter a column number between 1 - " +boardSize+ ":", boardSize);
+            int userSelectedRow = getValidNumber(scan, "Please enter a row number between 1 - " +boardSize+ ":", boardSize);
 
             if (board.playerBoard[userSelectedRow - 1][userSelectedCol - 1].isRevealed()) {
                 System.out.println("This tile has already been revealed. Please select another tile.");
             } else {
+                //Calls reveal board method which checks if user hits mine
                 if (!board.revealBoard(userSelectedRow, userSelectedCol)) {
                     board.displayBoard();
                     board.revealAllTiles();
@@ -54,12 +56,15 @@ public class Main {
                 if (userInput > 0 && userInput <= boardSize) {
                     validInput = userInput;
                 } else {
-                    System.out.println("Invalid input. Please enter a number between 1-" + boardSize + ".");
+                    //System.out.println("Invalid input. Please enter a number between 1-" + boardSize + ".");
+                    System.out.println("Invalid input.");
+
                 }
 
 
             } else {
-                System.out.println("Invalid input. Please enter a number.");
+                //System.out.println("Invalid input. Please enter a number.");
+                System.out.println("Invalid input.");
                 scan.next();
             }
 

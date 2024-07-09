@@ -36,6 +36,7 @@ public class Board {
             }
         }
 
+        //If tile is not a mine, then count no. mines near
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 if (!playerBoard[i][j].isMine()) {
@@ -99,7 +100,7 @@ public class Board {
     }
 
 
-
+    //Reveal the tile user has selected
     private void revealTile(int row, int col) {
 
         //If out of bounds
@@ -110,6 +111,7 @@ public class Board {
         //Reveal Tile to player
         playerBoard[row][col].reveal();
 
+        //Tile has no adjacent mines
         if (playerBoard[row][col].getAdjacentMines() == 0) {
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
@@ -145,6 +147,7 @@ public class Board {
                     if (playerBoard[i][j].isMine()) {
                         System.out.print("*  ");
                     } else {
+                        //0-8
                         System.out.printf("%-3d", playerBoard[i][j].getAdjacentMines());
                     }
                 } else {
@@ -153,6 +156,7 @@ public class Board {
             }
             System.out.println();
         }
+        System.out.println();
 
 
     }
